@@ -14,7 +14,7 @@ class BoardController extends Controller
    */
   public function index()
   {
-    $boards = Board::select('title')
+    $boards = Board::select('id', 'title')
     ->get();
     return view('boards.index', compact('boards'));
   }
@@ -53,7 +53,9 @@ class BoardController extends Controller
    */
   public function show($id)
   {
-    //
+    $board = Board::find($id);
+
+    return view('boards.show', compact('board'));
   }
 
   /**

@@ -30,7 +30,7 @@
             <ul class="px-8">
               @foreach($boards as $board)
                 <li class="block p-2 pl-4 border-b">
-                  <a href="#" class="block text-gray-100 hover:text-gray-600">
+                  <a href="{{ route('boards.show', ['board' => $board->id ]) }}" class="block text-gray-100 hover:text-gray-600">
                     {{ $board->title }}
                   </a>
                 </li>
