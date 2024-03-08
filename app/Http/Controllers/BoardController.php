@@ -66,7 +66,9 @@ class BoardController extends Controller
    */
   public function edit($id)
   {
-    //
+    $board = Board::find($id);
+
+    return view('boards.edit', compact('board'));
   }
 
   /**
@@ -78,7 +80,12 @@ class BoardController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    $board = Board::find($id);
+    $board->title = $request->title;
+    $board->content = $request->content;
+    $board->save();
+
+    return to_route('boards.index');
   }
 
   /**
@@ -89,6 +96,9 @@ class BoardController extends Controller
    */
   public function destroy($id)
   {
-    //
+    $board = Board::find($id);
+    $board->delete();
+
+    return to_route('boards.index');
   }
 }
