@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Board;
+use App\Http\Requests\StoreBoardRequest;
+use App\Http\Requests\UpdateBoardRequest;
 
 class BoardController extends Controller
 {
@@ -35,7 +37,7 @@ class BoardController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(StoreBoardRequest $request)
   {
     Board::create([
       'title' => $request->title,
@@ -78,7 +80,7 @@ class BoardController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UpdateBoardRequest $request, $id)
   {
     $board = Board::find($id);
     $board->title = $request->title;
