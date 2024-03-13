@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Board;
 use App\Http\Requests\StoreBoardRequest;
 use App\Http\Requests\UpdateBoardRequest;
@@ -39,7 +40,10 @@ class BoardController extends Controller
    */
   public function store(StoreBoardRequest $request)
   {
+    $user = Auth::user();
+
     Board::create([
+      'user_id' => $user->id,
       'title' => $request->title,
       'content' => $request->content,
     ]);
