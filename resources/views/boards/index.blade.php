@@ -10,7 +10,7 @@
       <a href="{{ route('boards.create') }}" class="bg-gray-800 overflow-hidden mb-6 inline-block shadow-sm sm:rounded-lg p-4 text-gray-100 hover:text-gray-600">新規登録</a>
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 text-gray-900 dark:text-gray-100">
-          <section class="text-gray-100 body-font p-6 pt-2">
+          <section class="text-gray-100 body-font p-6 pt-2 mb-4">
             <ul class="px-8">
               @foreach($boards as $board)
                 <li class="block p-2 pl-4 border-b">
@@ -21,6 +21,7 @@
               @endforeach
             </ul>
           </section>
+          {{ $boards->links() }}
         </div>
       </div>
     </div>
