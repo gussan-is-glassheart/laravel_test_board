@@ -59,9 +59,10 @@ class BoardController extends Controller
    */
   public function show($id)
   {
+    $user = Auth::user();
     $board = Board::find($id);
 
-    return view('boards.show', compact('board'));
+    return view('boards.show', compact('user','board'));
   }
 
   /**
@@ -74,6 +75,9 @@ class BoardController extends Controller
   {
     $board = Board::find($id);
 
+    if ($board->user_id !== auth()->id()){
+      return redirect()->route('boards.index');
+    }
     return view('boards.edit', compact('board'));
   }
 
@@ -89,7 +93,8 @@ class BoardController extends Controller
     $board = Board::find($id);
     $board->title = $request->title;
     $board->content = $request->content;
-    $board->save();
+    $this->authorize('update', $board);
+    $board->update();
 
     return to_route('boards.index');
   }
@@ -103,6 +108,7 @@ class BoardController extends Controller
   public function destroy($id)
   {
     $board = Board::find($id);
+    $this->authorize('delete', $board);
     $board->delete();
 
     return to_route('boards.index');

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('boards', BoardController::class);
+Route::middleware(['auth'])->resource('boards', BoardController::class);
 
 Route::get('/', function () {
     return view('welcome');
