@@ -17,10 +17,12 @@ class BoardController extends Controller
    */
   public function index()
   {
-    $boards = Board::select('id', 'title', 'created_at')
+    $user = Auth::user();
+    $boards = Board::select('id', 'title', 'created_at', 'user_id')
     ->orderBy('created_at', 'desc')
     ->paginate(10);
-    return view('boards.index', compact('boards'));
+
+    return view('boards.index', compact('user','boards'));
   }
 
   /**
