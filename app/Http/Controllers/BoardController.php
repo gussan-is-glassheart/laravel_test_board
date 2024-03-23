@@ -51,6 +51,8 @@ class BoardController extends Controller
       'content' => $request->content,
     ]);
 
+    session()->flash('message', '掲示板を作成しました');
+
     return to_route('boards.index');
   }
 
@@ -99,6 +101,8 @@ class BoardController extends Controller
     $this->authorize('update', $board);
     $board->update();
 
+    session()->flash('message', '掲示板を更新しました');
+
     return to_route('boards.index');
   }
 
@@ -113,6 +117,8 @@ class BoardController extends Controller
     $board = Board::find($id);
     $this->authorize('delete', $board);
     $board->delete();
+
+    session()->flash('message', '掲示板を削除しました');
 
     return to_route('boards.index');
   }
