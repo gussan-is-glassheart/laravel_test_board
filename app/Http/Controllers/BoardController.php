@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Board;
 use App\Http\Requests\StoreBoardRequest;
 use App\Http\Requests\UpdateBoardRequest;
@@ -16,9 +17,12 @@ class BoardController extends Controller
    */
   public function index()
   {
-    $boards = Board::select('id', 'title')
-    ->get();
-    return view('boards.index', compact('boards'));
+    $user = Auth::user();
+    $boards = Board::select('id', 'title', 'created_at', 'user_id')
+    ->orderBy('created_at', 'desc')
+    ->paginate(10);
+
+    return view('boards.index', compact('user','boards'));
   }
 
   /**
@@ -39,10 +43,15 @@ class BoardController extends Controller
    */
   public function store(StoreBoardRequest $request)
   {
+    $user = Auth::user();
+
     Board::create([
+      'user_id' => $user->id,
       'title' => $request->title,
       'content' => $request->content,
     ]);
+
+    session()->flash('message', '掲示板を作成しました');
 
     return to_route('boards.index');
   }
@@ -55,9 +64,10 @@ class BoardController extends Controller
    */
   public function show($id)
   {
+    $user = Auth::user();
     $board = Board::find($id);
 
-    return view('boards.show', compact('board'));
+    return view('boards.show', compact('user','board'));
   }
 
   /**
@@ -70,6 +80,9 @@ class BoardController extends Controller
   {
     $board = Board::find($id);
 
+    if ($board->user_id !== auth()->id()){
+      return redirect()->route('boards.index');
+    }
     return view('boards.edit', compact('board'));
   }
 
@@ -85,7 +98,10 @@ class BoardController extends Controller
     $board = Board::find($id);
     $board->title = $request->title;
     $board->content = $request->content;
-    $board->save();
+    $this->authorize('update', $board);
+    $board->update();
+
+    session()->flash('message', '掲示板を更新しました');
 
     return to_route('boards.index');
   }
@@ -99,7 +115,10 @@ class BoardController extends Controller
   public function destroy($id)
   {
     $board = Board::find($id);
+    $this->authorize('delete', $board);
     $board->delete();
+
+    session()->flash('message', '掲示板を削除しました');
 
     return to_route('boards.index');
   }

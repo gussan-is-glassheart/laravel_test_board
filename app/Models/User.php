@@ -13,6 +13,14 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * ユーザーが作成した掲示板を取得
+     */
+    public function boards()
+    {
+      return $this->hasMany(Board::class);
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
