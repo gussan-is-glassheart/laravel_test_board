@@ -15,11 +15,20 @@ class BoardController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
     $user = Auth::user();
-    $boards = Board::select('id', 'title', 'created_at', 'user_id')
-    ->orderBy('created_at', 'desc')
+    // $boards = Board::select('id', 'title', 'created_at', 'user_id')
+    $boards = Board::query();
+
+    // キーワードから検索処理
+    $keyword = $request->input('keyword');
+    if(!empty($keyword)) { //keywordが空ではない場合、検索処理を実行します
+      $boards->where('title', 'LIKE', "%{$keyword}%");
+    }
+
+    // ソート(作成順)、ページネーション
+    $boards = $boards->orderBy('created_at', 'desc')
     ->paginate(10);
 
     return view('boards.index', compact('user','boards'));

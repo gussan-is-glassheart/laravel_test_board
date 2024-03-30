@@ -28,15 +28,43 @@
 
       <!-- Page Content -->
       <main>
-        @if(session('message'))
-          <div class="max-w-7xl mx-auto my-6 sm:px-6 lg:px-8">
-            <div class="bg-gray-800 p-4 text-gray-100 sm:rounded-lg">
-              {{ session('message') }}
+
+        @if (\Route::is('boards.*'))
+
+          <div class="py-8">
+
+            @if(session('message'))
+              <div class="max-w-7xl mx-auto mb-6 sm:px-6 lg:px-8">
+                <div class="bg-gray-800 p-4 text-gray-100 sm:rounded-lg">
+                  {{ session('message') }}
+                </div>
+              </div>
+            @endif
+
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+              @if (\Route::is('boards.create', 'boards.show', 'boards.edit'))
+                <a href="#" class="bg-gray-800 overflow-hidden mb-6 inline-block shadow-sm sm:rounded-lg p-4 text-gray-100 hover:text-gray-600" onclick="history.back()">戻る</a>
+              @elseif (\Route::is('boards.index'))
+                <a href="{{ route('boards.create') }}" class="bg-gray-800 overflow-hidden mb-6 inline-block shadow-sm sm:rounded-lg p-4 text-gray-100 hover:text-gray-600">新規登録</a>
+              @endif
+
+              <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 text-gray-100">
+
+                  {{ $slot }}
+
+                </div>
+              </div>
             </div>
           </div>
-        @endif
+
+        @else
 
         {{ $slot }}
+
+        @endif
+
       </main>
     </div>
   </body>
