@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Board extends Model
+class Comment extends Model
 {
   use HasFactory;
 
@@ -14,17 +14,15 @@ class Board extends Model
     return $this->belongsTo(User::class);
   }
 
-  /**
-   * ユーザーが作成したコメントを取得
-   */
-  public function comments()
+  public function board()
   {
-    return $this->hasMany(Comment::class);
+    return $this->belongsTo(Board::class);
   }
 
   protected $fillable = [
-    'title',
-    'content',
-    'user_id'
+    'body',
+    'user_id',
+    'board_id'
   ];
+
 }

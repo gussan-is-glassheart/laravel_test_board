@@ -21,6 +21,14 @@ class User extends Authenticatable
     }
 
     /**
+     * ユーザーが作成したコメントを取得
+     */
+    public function comments()
+    {
+      return $this->hasMany(Comment::class);
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

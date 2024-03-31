@@ -6,7 +6,7 @@
   </x-slot>
 
   <section class="text-gray-100 body-font p-6">
-    <div class="container px-2 mx-auto">
+    <div class="container px-2 mx-auto mb-10">
       <div class="lg:w-1/2 md:w-2/3 mx-auto">
         <div class="flex flex-wrap -m-2">
 
@@ -46,6 +46,32 @@
 
         </div>
       </div>
+    </div>
+    <div class="mx-auto">
+      <div class=" flex justify-between mb-6 border-b px-2">
+        <h3 class="pb-1">コメント</h3>
+        <p>{{ $board->comments()->count() }} 件</p>
+      </div>
+      <ul class="my-8">
+        @foreach($board->comments as $comment)
+          <li class="py-1 border-b text-sm text-gray-300 mx-4 my-2 px-2 border-gray-500">{{ $comment->body }}</li>
+        @endforeach
+      </ul>
+    </div>
+    <div class="mx-auto">
+      <form method="post" action="{{ route('comments.store') }}">
+        @csrf
+        <input type="hidden" name='board_id' value="{{ $board->id }}">
+        <div class="p-2 w-full">
+          <div class="relative">
+            <textarea id="body" name="body" class="w-full bg-gray-900 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 h-16 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">{{ old('body') }}</textarea>
+            <x-input-error :messages="$errors->get('body')" class="mt-1" />
+          </div>
+          <div class="p-2 w-full">
+            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">コメントする</button>
+          </div>
+        </div>
+      </form>
     </div>
   </section>
 

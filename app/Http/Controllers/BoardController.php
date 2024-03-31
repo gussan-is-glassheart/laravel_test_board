@@ -18,7 +18,6 @@ class BoardController extends Controller
   public function index(Request $request)
   {
     $user = Auth::user();
-    // $boards = Board::select('id', 'title', 'created_at', 'user_id')
     $boards = Board::query();
 
     // キーワードから検索処理
