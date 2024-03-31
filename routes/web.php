@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth'])->resource('boards', BoardController::class);
+Route::middleware(['auth'])->post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
 
 Route::get('/', function () {
     return view('welcome');
