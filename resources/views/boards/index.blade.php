@@ -1,18 +1,19 @@
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+    <h2 class="font-semibold text-xl text-gray-200 leading-tight">
       掲示板一覧
     </h2>
   </x-slot>
 
   <section class="text-gray-100 body-font p-6 pt-2 mb-4">
     <ul class="px-8">
-      <div class="mb-6">
+      <div class="mb-6 flex">
         <form action="{{ route('boards.index') }}" method="GET">
           @csrf
           <input type="text" name="keyword" class="text-gray-600 p-1" placeholder="タイトルで検索">
           <input type="submit" value="検索" class="text-white border px-2 py-1 hover:bg-white hover:text-gray-600">
         </form>
+        <a href="{{ route('boards.index') }}" class="border px-2 py-1 ml-2 bg-white text-gray-600 hover:bg-gray-700 hover:text-white">クリア</a>
       </div>
       @foreach($boards as $board)
         <li class="flex justify-between py-2 pl-4 border-b">
