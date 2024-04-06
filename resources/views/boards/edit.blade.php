@@ -5,12 +5,12 @@
     </h2>
   </x-slot>
 
-  <section class="text-gray-100 body-font p-6">
+  <section class="text-gray-100 body-font ms:p-6">
     <form method="post" action="{{ route('boards.update', ['board' => $board->id ]) }}">
       @method('patch')
       @csrf
 
-      <div class="container px-2 mx-auto">
+      <div class="container sm:px-2 mx-auto">
         <div class="lg:w-1/2 md:w-2/3 mx-auto">
           <div class="flex flex-wrap -m-2">
 
