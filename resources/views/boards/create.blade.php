@@ -1,15 +1,15 @@
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+    <h2 class="font-semibold text-xl text-gray-200 leading-tight">
       新規掲示板作成
     </h2>
   </x-slot>
 
-  <section class="text-gray-100 body-font p-6">
+  <section class="text-gray-100 body-font sm:p-6">
     <form method="post" action="{{ route('boards.store') }}">
       @csrf
 
-      <div class="container px-2 mx-auto">
+      <div class="container sm:px-2 mx-auto">
         <div class="lg:w-1/2 md:w-2/3 mx-auto">
           <div class="flex flex-wrap -m-2">
 

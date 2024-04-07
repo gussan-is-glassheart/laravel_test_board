@@ -1,11 +1,11 @@
 <x-app-layout>
   <x-slot name="header">
-      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+      <h2 class="font-semibold text-xl text-gray-200 leading-tight">
           詳細画面
       </h2>
   </x-slot>
 
-  <section class="text-gray-100 body-font p-6">
+  <section class="text-gray-100 body-font sm:p-6">
     <div class="container px-2 mx-auto mb-10">
       <div class="lg:w-1/2 md:w-2/3 mx-auto">
         <div class="flex flex-wrap -m-2">
@@ -47,8 +47,8 @@
         </div>
       </div>
     </div>
-    <div class="mx-auto">
-      <div class=" flex justify-between mb-6 border-b px-2">
+    <div class="lg:w-1/2 md:w-2/3 mx-auto px-4 sm:px-0">
+      <div class="flex justify-between mb-6 border-b px-2">
         <h3 class="pb-1">コメント</h3>
         <p>{{ $board->comments()->count() }} 件</p>
       </div>
@@ -57,8 +57,6 @@
           <li class="py-1 border-b text-sm text-gray-300 mx-4 my-2 px-2 border-gray-500">{{ $comment->body }}</li>
         @endforeach
       </ul>
-    </div>
-    <div class="mx-auto">
       <form method="post" action="{{ route('comments.store') }}">
         @csrf
         <input type="hidden" name='board_id' value="{{ $board->id }}">
