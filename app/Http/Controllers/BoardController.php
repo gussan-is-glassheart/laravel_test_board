@@ -21,8 +21,6 @@ class BoardController extends Controller
     $user = Auth::user();
     $boards = Board::query();
 
-    $latestCommentDate = Comment::orderBy('updated_at', 'DESC')->orderBy('id', 'DESC')->first();
-
     // キーワードから検索処理
     $keyword = $request->input('keyword');
     if(!empty($keyword)) { //keywordが空ではない場合、検索処理を実行します
@@ -33,7 +31,7 @@ class BoardController extends Controller
     $boards = $boards->orderBy('created_at', 'desc')
     ->paginate(10);
 
-    return view('boards.index', compact('user','boards', 'latestCommentDate'));
+    return view('boards.index', compact('user','boards'));
   }
 
   /**

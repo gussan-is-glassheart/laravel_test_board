@@ -21,7 +21,11 @@
             <span class="block text-xs text-gray-300">
               <span class="block mb-1 sm:inline-block sm:mb-0">作成者：{{ $board->user->name }}</span>
               <span class="sm:ml-2">最終更新日時：{{ $board->updated_at->diffForHumans() }}</span>
-              <span class="ml-2">最終コメント日時：{{ $latestCommentDate->updated_at->diffForHumans() }}</span>
+
+              @if ($board->comments->isNotEmpty())
+                <span class="ml-2">最終コメント日時：{{ $board->comments->sortByDesc('updated_at')->first()->updated_at->diffForHumans() }}</span>
+              @endif
+
             </span>
             <a href="{{ route('boards.show', ['board' => $board->id ]) }}" class="inline-block text-gray-100 hover:text-gray-600 font-black py-2">
               {{ $board->title }}
