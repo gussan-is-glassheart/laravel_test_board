@@ -23,7 +23,7 @@
               <span class="sm:ml-2">最終更新日時：{{ $board->updated_at->diffForHumans() }}</span>
 
               @if ($board->comments->isNotEmpty())
-                <span class="ml-2">最終コメント日時：{{ $board->comments->sortByDesc('updated_at')->first()->updated_at->diffForHumans() }}</span>
+                <span class="ml-2">最新コメント：{{ $board->comments->sortByDesc('updated_at')->first()->updated_at->diffForHumans() }}</span>
               @endif
 
             </span>
