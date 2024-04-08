@@ -17,12 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth'])->resource('boards', BoardController::class);
+Route::get('/', [BoardController::class, 'index'])->name('boards.index');
+
+// ログインが必要なアクション（create、store、edit、update、destroy）は、'auth'ミドルウェアを使う
+Route::middleware(['auth'])->group(function () {
+  Route::resource('boards', BoardController::class)->except(['index', 'show']);
+});
+
+// ログインが不要なアクション（index、show）は、'guest'ミドルウェアを使う
+Route::middleware(['guest'])->group(function () {
+  Route::resource('boards', BoardController::class)->only(['index', 'show']);
+});
+
 Route::middleware(['auth'])->post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

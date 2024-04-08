@@ -31,19 +31,21 @@
               {{ $board->title }}
             </a>
           </div>
-          @can ('viewOwnBoard', $board)
-            <div class="mb-2 mt-3 flex items-center">
-              <form class="inline-block" method='get' action="{{ route('boards.edit', ['board' => $board->id ]) }}">
-                <button class="inline-block mr-3 px-3 py-1 text-white bg-indigo-500 rounded  hover:bg-indigo-600">編集</button>
-              </form>
+          @auth
+            @can ('viewOwnBoard', $board)
+              <div class="mb-2 mt-3 flex items-center">
+                <form class="inline-block" method='get' action="{{ route('boards.edit', ['board' => $board->id ]) }}">
+                  <button class="inline-block mr-3 px-3 py-1 text-white bg-indigo-500 rounded  hover:bg-indigo-600">編集</button>
+                </form>
 
-              <form class="inline-block" id="delete_{{ $board->id }}" method="post" action="{{ route('boards.destroy', ['board' => $board->id ]) }}">
-              @method('delete')
-              @csrf
-                <a href="#" data-id="{{ $board->id }}" onclick="deletePost(this)" class="inline-block mr-3 px-3 py-1 text-white bg-pink-500 rounded hover:bg-pink-600">削除</a>
-              </form>
-            </div>
-          @endcan
+                <form class="inline-block" id="delete_{{ $board->id }}" method="post" action="{{ route('boards.destroy', ['board' => $board->id ]) }}">
+                @method('delete')
+                @csrf
+                  <a href="#" data-id="{{ $board->id }}" onclick="deletePost(this)" class="inline-block mr-3 px-3 py-1 text-white bg-pink-500 rounded hover:bg-pink-600">削除</a>
+                </form>
+              </div>
+            @endcan
+          @endauth
         </li>
       @endforeach
     </ul>

@@ -57,19 +57,21 @@
           <li class="py-1 border-b text-sm text-gray-300 mx-4 my-2 px-2 border-gray-500">{{ $comment->body }}</li>
         @endforeach
       </ul>
-      <form method="post" action="{{ route('comments.store') }}">
-        @csrf
-        <input type="hidden" name='board_id' value="{{ $board->id }}">
-        <div class="p-2 w-full">
-          <div class="relative">
-            <textarea id="body" name="body" class="w-full bg-gray-900 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 h-16 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">{{ old('body') }}</textarea>
-            <x-input-error :messages="$errors->get('body')" class="mt-1" />
-          </div>
+      @auth
+        <form method="post" action="{{ route('comments.store') }}">
+          @csrf
+          <input type="hidden" name='board_id' value="{{ $board->id }}">
           <div class="p-2 w-full">
-            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">コメントする</button>
+            <div class="relative">
+              <textarea id="body" name="body" class="w-full bg-gray-900 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 h-16 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">{{ old('body') }}</textarea>
+              <x-input-error :messages="$errors->get('body')" class="mt-1" />
+            </div>
+            <div class="p-2 w-full">
+              <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">コメントする</button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      @endauth
     </div>
   </section>
 

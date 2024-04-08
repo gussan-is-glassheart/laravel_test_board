@@ -46,7 +46,9 @@
               @if (\Route::is('boards.create', 'boards.show', 'boards.edit'))
                 <a href="{{ route('boards.index') }}" class="bg-gray-800 overflow-hidden mb-2 sm:mb-6 inline-block shadow-sm ml-4 sm:ml-0 sm:rounded-lg p-4 text-gray-100 hover:text-gray-600">戻る</a>
               @elseif (\Route::is('boards.index'))
-                <a href="{{ route('boards.create') }}" class="bg-gray-800 overflow-hidden mb-2 sm:mb-6 inline-block shadow-sm ml-4 sm:ml-0 sm:rounded-lg p-4 text-gray-100 hover:text-gray-600">新規登録</a>
+                @auth
+                  <a href="{{ route('boards.create') }}" class="bg-gray-800 overflow-hidden mb-2 sm:mb-6 inline-block shadow-sm ml-4 sm:ml-0 sm:rounded-lg p-4 text-gray-100 hover:text-gray-600">新規登録</a>
+                @endauth
               @endif
 
               <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
