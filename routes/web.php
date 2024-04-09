@@ -17,12 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth'])->resource('boards', BoardController::class);
-Route::middleware(['auth'])->post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/', [BoardController::class, 'index'])->name('boards.index');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+  Route::resource('boards', BoardController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
 });
+
+Route::resource('boards', BoardController::class)->only(['index', 'show']);
+
+Route::middleware(['auth'])->post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+Route::middleware(['auth'])->resource('comments', CommentController::class)->only(['store', 'destroy']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
